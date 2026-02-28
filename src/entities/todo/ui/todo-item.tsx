@@ -1,10 +1,26 @@
 import React, { useState, useRef, useEffect, FC } from "react";
-import { useAppDispatch } from "shared";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import {
+  isTouchDevice,
+  useAppDispatch,
+  BLUE_UI_COLOR,
+  GREEN_UI_COLOR,
+} from "shared";
+import { Pencil, Trash } from "./components";
 import { Todo, toggleTodo, deleteTodo, editTodo } from "../model";
+import {
+  Button,
+  Checkbox,
+  Input,
+  MobileHandle,
+  TodoContainer,
+  TodoName,
+  TodoText,
+} from "./todo-item.styles";
 
 export type TodoItemProps = {
   todo: Todo;
-  dragHandleProps?: any;
+  dragHandleProps?: SyntheticListenerMap | undefined;
   onEditingChange?: (editing: boolean) => void;
   onDragEndCleanup?: (fn: () => void) => void;
 };
@@ -19,10 +35,11 @@ export const TodoItem: FC<TodoItemProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(todo.title);
   const [showHandle, setShowHandle] = useState(false);
-
   const hideTimerRef = useRef<number | null>(null);
-  const isTouchDevice =
-    typeof window !== "undefined" && "ontouchstart" in window;
+
+  const stopDrag = (e: React.PointerEvent | React.MouseEvent) => {
+    e.stopPropagation();
+  };
 
   const startEditing = () => {
     setIsEditing(true);
@@ -63,170 +80,64 @@ export const TodoItem: FC<TodoItemProps> = ({
     };
   }, []);
 
-  const stopDrag = (e: React.PointerEvent | React.MouseEvent) => {
-    e.stopPropagation();
-  };
+  const todoContainerProps = !isTouchDevice ? dragHandleProps : {};
 
   return (
-    <div
-      {...(!isTouchDevice && dragHandleProps ? dragHandleProps : {})}
-      style={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        gap: "8px",
-        marginBottom: "8px",
-        padding: "12px",
-        borderRadius: "8px",
-        backgroundColor: "#fff",
-        boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-        paddingLeft: isTouchDevice ? (showHandle ? 50 : 12) : 12,
-        transition: "padding-left 0.25s",
-        touchAction: isTouchDevice ? "pan-y" : "auto",
-        cursor: isTouchDevice ? "default" : "grab",
-      }}
+    <TodoContainer
+      {...todoContainerProps}
+      $isTouch={isTouchDevice}
+      $showHandle={showHandle}
       onClick={isTouchDevice ? handleTap : undefined}
     >
-      {!isEditing && isTouchDevice && dragHandleProps && showHandle && (
-        <div
-          {...dragHandleProps}
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: "40px",
-            cursor: "grab",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 3,
-            overflow: "hidden",
-            touchAction: "none",
-          }}
-        >
-          <span
-            style={{
-              display: "inline-block",
-              transform: "translateX(0)",
-              transition: "transform 0.25s",
-              fontSize: "18px",
-            }}
-          >
-            🖐🏻
-          </span>
-        </div>
+      {!isEditing && isTouchDevice && showHandle && (
+        <MobileHandle {...dragHandleProps}>
+          <span>🖐🏻</span>
+        </MobileHandle>
       )}
 
-      <span
-        style={{
-          flex: 1,
-          minWidth: 0,
-          zIndex: 2,
-          cursor: !isTouchDevice ? "grab" : "default",
-        }}
-      >
+      <TodoText $isTouch={isTouchDevice}>
         {isEditing ? (
-          <input
+          <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSave()}
             onBlur={handleSave}
             autoFocus
-            style={{
-              width: "100%",
-              padding: "8px",
-              fontSize: "16px",
-              borderRadius: "6px",
-              border: "1px solid #ccc",
-              boxSizing: "border-box",
-              cursor: "text",
-            }}
           />
         ) : (
-          <span
-            style={{
-              textDecoration: todo.completed ? "line-through" : "none",
-              color: todo.completed ? "#45d656" : "#333",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              display: "block",
-            }}
-          >
-            {todo.title}
-          </span>
+          <TodoName $completed={todo.completed}>{todo.title}</TodoName>
         )}
-      </span>
+      </TodoText>
 
-      <input
+      <Checkbox
         type="checkbox"
         checked={todo.completed}
         onPointerDown={stopDrag}
         onClick={(e) => isTouchDevice && e.stopPropagation()}
         onChange={() => dispatch(toggleTodo({ id: todo.id }))}
-        style={{
-          accentColor: "#45d656",
-          width: "20px",
-          height: "20px",
-          cursor: "pointer",
-          zIndex: 2,
-        }}
       />
 
-      <button
+      <Button
+        $bgColor={BLUE_UI_COLOR}
         onPointerDown={stopDrag}
         onClick={(e) => {
           if (isTouchDevice) e.stopPropagation();
           startEditing();
         }}
-        style={{
-          backgroundColor: "#0487c4",
-          border: "none",
-          borderRadius: "6px",
-          padding: "6px 10px",
-          cursor: "pointer",
-          flexShrink: 0,
-          zIndex: 2,
-        }}
       >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="white"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" />
-        </svg>
-      </button>
+        <Pencil />
+      </Button>
 
-      <button
+      <Button
+        $bgColor={GREEN_UI_COLOR}
         onPointerDown={stopDrag}
         onClick={(e) => {
           if (isTouchDevice) e.stopPropagation();
           dispatch(deleteTodo({ id: todo.id }));
         }}
-        style={{
-          backgroundColor: "#45d656",
-          border: "none",
-          borderRadius: "6px",
-          padding: "6px 10px",
-          cursor: "pointer",
-          flexShrink: 0,
-          zIndex: 2,
-        }}
       >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="white"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M3 6h18v2H3V6zm2 3h14l-1.5 12.5a1 1 0 0 1-1 .5H8a1 1 0 0 1-1-.5L5 9zm5 2v8h2v-8H10zm4 0v8h2v-8h-2z" />
-        </svg>
-      </button>
-    </div>
+        <Trash />
+      </Button>
+    </TodoContainer>
   );
 };

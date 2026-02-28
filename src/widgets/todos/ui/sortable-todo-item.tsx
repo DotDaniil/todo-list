@@ -2,15 +2,16 @@ import React from "react";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { Todo, TodoItem } from "entities";
+import { SortableWrapper } from "./sortable-todo-item.styles";
 
-interface Props {
+export type SortableTodoItemProps = {
   todo: Todo;
   isEditing: boolean;
   onEditingChange?: (editing: boolean) => void;
   onDragEndCleanup?: (cleanupFn: () => void) => void;
-}
+};
 
-export const SortableTodoItem: React.FC<Props> = ({
+export const SortableTodoItem: React.FC<SortableTodoItemProps> = ({
   todo,
   isEditing,
   onEditingChange,
@@ -23,18 +24,18 @@ export const SortableTodoItem: React.FC<Props> = ({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: todo.id });
+  } = useSortable({
+    id: todo.id,
+  });
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    zIndex: isDragging ? 1 : 0,
-  };
+  const transformStyle = CSS.Transform.toString(transform);
 
   return (
-    <div
+    <SortableWrapper
       ref={setNodeRef}
-      style={{ ...style, position: "relative" }}
+      isDragging={isDragging}
+      transform={transformStyle}
+      transition={transition}
       {...attributes}
     >
       <TodoItem
@@ -43,6 +44,6 @@ export const SortableTodoItem: React.FC<Props> = ({
         onEditingChange={onEditingChange}
         onDragEndCleanup={onDragEndCleanup}
       />
-    </div>
+    </SortableWrapper>
   );
 };

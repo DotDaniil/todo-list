@@ -1,16 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-
-export interface Todo {
-  id: string;
-  title: string;
-  completed: boolean;
-  createdAt: number;
-}
-
-interface TodoState {
-  todos: Todo[];
-}
+import { Todo, TodoState } from "./types";
 
 const savedTodos = localStorage.getItem("todos");
 const initialState: TodoState = {

@@ -1,10 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export type Filter = "all" | "completed" | "active";
-
-interface FilterState {
-  filter: Filter;
-}
+import { Filter, FilterState } from "./types";
 
 const savedFilter = localStorage.getItem("filter") as Filter | null;
 const initialState: FilterState = { filter: savedFilter || "all" };

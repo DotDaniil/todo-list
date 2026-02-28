@@ -1,29 +1,25 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "app";
-import { useAppDispatch } from "shared";
-import { setFilter, Filter } from "../model";
+import { filters, useAppDispatch } from "shared";
+import { setFilter } from "../model";
+import { FilterButton, FilterContainer } from "./filter-todos.styles";
 
 export const FilterTodos: FC = () => {
   const dispatch = useAppDispatch();
   const currentFilter = useSelector((state: RootState) => state.filter.filter);
 
-  const filters: Filter[] = ["all", "active", "completed"];
-
   return (
-    <div style={{ marginBottom: "16px" }}>
+    <FilterContainer>
       {filters.map((f) => (
-        <button
+        <FilterButton
           key={f}
+          active={f === currentFilter}
           onClick={() => dispatch(setFilter(f))}
-          style={{
-            fontWeight: f === currentFilter ? "bold" : "normal",
-            marginRight: "8px",
-          }}
         >
           {f}
-        </button>
+        </FilterButton>
       ))}
-    </div>
+    </FilterContainer>
   );
 };

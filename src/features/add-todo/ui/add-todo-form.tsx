@@ -1,12 +1,13 @@
 import { useState, FC, ChangeEvent } from "react";
 import { useAppDispatch } from "shared";
 import { addTodo } from "entities";
+import { Form, Input, Button } from "./add-todo-form.styles";
 
 export const AddTodoForm: FC = () => {
   const [title, setTitle] = useState("");
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: ChangeEvent) => {
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (title.trim() === "") return;
     dispatch(addTodo({ title }));
@@ -14,37 +15,14 @@ export const AddTodoForm: FC = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", gap: "8px", marginBottom: "24px" }}
-    >
-      <input
+    <Form onSubmit={handleSubmit}>
+      <Input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a new todo..."
-        style={{
-          flex: 1,
-          padding: "12px",
-          borderRadius: "8px",
-          border: "1px solid #ccc",
-          fontSize: "16px",
-        }}
       />
-      <button
-        type="submit"
-        style={{
-          padding: "12px 20px",
-          borderRadius: "8px",
-          border: "none",
-          backgroundColor: "#0487c4",
-          color: "#fff",
-          fontWeight: "bold",
-          cursor: "pointer",
-        }}
-      >
-        Add
-      </button>
-    </form>
+      <Button type="submit">Add</Button>
+    </Form>
   );
 };

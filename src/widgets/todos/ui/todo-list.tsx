@@ -1,10 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "app";
-import { useAppDispatch } from "shared";
-import { reorderTodos } from "entities";
-import { SortableTodoItem } from "./sortable-todo-item";
-
 import {
   DndContext,
   closestCenter,
@@ -17,21 +13,19 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-
-import {
-  setFilter,
-  Filter,
-} from "../../../features/filter-todos/model/filter-slice";
+import { filters, useAppDispatch } from "shared";
+import { reorderTodos } from "entities";
+import { setFilter } from "features";
+import { SortableTodoItem } from "./sortable-todo-item";
+import { EmptyMessage, FilterButton, FilterWrapper } from "./todo-list.styles";
 
 export const TodoList: React.FC = () => {
+  const sensors = useSensors(useSensor(PointerSensor));
   const todos = useSelector((state: RootState) => state.todos.todos);
   const filter = useSelector((state: RootState) => state.filter.filter);
-  const todoRefs = useRef<(() => void)[]>([]);
   const dispatch = useAppDispatch();
-
   const [editingId, setEditingId] = useState<string | null>(null);
-
-  const sensors = useSensors(useSensor(PointerSensor));
+  const cleanupRefs = useRef<Record<string, (() => void) | null>>({});
 
   const filteredTodos = todos.filter((todo) => {
     if (filter === "all") return true;
@@ -52,37 +46,27 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  const filters: Filter[] = ["all", "active", "completed"];
-
   return (
     <div>
-      <div style={{ marginBottom: "16px", display: "flex", gap: "8px" }}>
+      <FilterWrapper>
         {filters.map((f) => (
-          <button
+          <FilterButton
             key={f}
+            active={f === filter}
             onClick={() => dispatch(setFilter(f))}
-            style={{
-              padding: "8px 16px",
-              borderRadius: "8px",
-              border: "none",
-              cursor: "pointer",
-              backgroundColor: f === filter ? "#0487c4" : "#ffffff",
-              color: f === filter ? "#fff" : "#0487c4",
-              fontWeight: f === filter ? "bold" : "normal",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-            }}
           >
             {f}
-          </button>
+          </FilterButton>
         ))}
-      </div>
+      </FilterWrapper>
 
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
         onDragStart={() => {
-          todoRefs.current.forEach((cleanup) => cleanup?.());
+          // NOTICE: Hides all drag and drop elements on mobile
+          Object.values(cleanupRefs.current).forEach((cleanup) => cleanup?.());
         }}
       >
         <SortableContext
@@ -90,9 +74,9 @@ export const TodoList: React.FC = () => {
           strategy={verticalListSortingStrategy}
         >
           {filteredTodos.length === 0 ? (
-            <p>No todos yet</p>
+            <EmptyMessage>No todos yet</EmptyMessage>
           ) : (
-            filteredTodos.map((todo, index) => (
+            filteredTodos.map((todo) => (
               <SortableTodoItem
                 key={todo.id}
                 todo={todo}
@@ -101,7 +85,7 @@ export const TodoList: React.FC = () => {
                   editing ? setEditingId(todo.id) : setEditingId(null)
                 }
                 onDragEndCleanup={(cleanupFn) => {
-                  todoRefs.current[index] = cleanupFn;
+                  cleanupRefs.current[todo.id] = cleanupFn;
                 }}
               />
             ))
