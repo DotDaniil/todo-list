@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { SortableTodoItem } from "./SortableTodoItem";
@@ -26,6 +26,7 @@ import {
 export const TodoList: React.FC = () => {
   const todos = useSelector((state: RootState) => state.todos.todos);
   const filter = useSelector((state: RootState) => state.filter.filter);
+  const todoRefs = useRef<(() => void)[]>([]);
   const dispatch = useAppDispatch();
 
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -80,6 +81,9 @@ export const TodoList: React.FC = () => {
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
+        onDragStart={() => {
+          todoRefs.current.forEach((cleanup) => cleanup?.());
+        }}
       >
         <SortableContext
           items={todos.map((t) => t.id)}
@@ -88,7 +92,7 @@ export const TodoList: React.FC = () => {
           {filteredTodos.length === 0 ? (
             <p>No todos yet</p>
           ) : (
-            filteredTodos.map((todo) => (
+            filteredTodos.map((todo, index) => (
               <SortableTodoItem
                 key={todo.id}
                 todo={todo}
@@ -96,6 +100,9 @@ export const TodoList: React.FC = () => {
                 onEditingChange={(editing) =>
                   editing ? setEditingId(todo.id) : setEditingId(null)
                 }
+                onDragEndCleanup={(cleanupFn) => {
+                  todoRefs.current[index] = cleanupFn;
+                }}
               />
             ))
           )}

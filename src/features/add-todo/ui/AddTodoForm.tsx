@@ -6,7 +6,7 @@ export const AddTodoForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.ChangeEvent) => {
     e.preventDefault();
     if (title.trim() === "") return;
     dispatch(addTodo({ title }));
