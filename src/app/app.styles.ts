@@ -12,6 +12,14 @@ export const AppWrapper = styled.div`
   user-select: none;
   overflow-y: auto;
   overflow-x: hidden;
+
+  /* Chrome, Edge, Safari */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  /* Firefox */
+  scrollbar-width: none;
 `;
 
 export const Title = styled.h1`
@@ -23,7 +31,7 @@ export const TouchNotice = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  padding: 40px;
+  padding: 20px;
   font-size: 14px;
   color: #333;
 `;
