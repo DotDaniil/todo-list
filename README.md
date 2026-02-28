@@ -2,6 +2,10 @@
 
 Минимальное приложение Todo List, реализованное с использованием React/TypeScript.
 
+# GitHub Pages
+
+https://dotdaniil.github.io/todo-list/
+
 ## Стек технологий
 
 - **React 18** – библиотека для построения пользовательских интерфейсов
