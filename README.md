@@ -35,6 +35,9 @@ npm run dev
 
 # Сборка проекта
 npm run build
+
+# Деплой проекта
+npm run deploy
 ```
 
 ## Структура проекта
