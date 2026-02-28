@@ -1,10 +1,10 @@
-import React from "react";
+import { FC } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
-import { setFilter, Filter } from "../model/filterSlice";
-import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
+import { RootState } from "app";
+import { useAppDispatch } from "shared";
+import { setFilter, Filter } from "../model";
 
-export const FilterTodos: React.FC = () => {
+export const FilterTodos: FC = () => {
   const dispatch = useAppDispatch();
   const currentFilter = useSelector((state: RootState) => state.filter.filter);
 

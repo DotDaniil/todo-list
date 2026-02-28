@@ -1,8 +1,7 @@
 import React from "react";
-import { Todo } from "../../../entities/todo/model/todoSlice";
-import { TodoItem } from "../../../entities/todo/ui/TodoItem";
-import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useSortable } from "@dnd-kit/sortable";
+import { Todo, TodoItem } from "entities";
 
 interface Props {
   todo: Todo;
@@ -31,8 +30,6 @@ export const SortableTodoItem: React.FC<Props> = ({
     transition,
     zIndex: isDragging ? 1 : 0,
   };
-
-  console.log(isDragging ? "dragging" : "not dragging");
 
   return (
     <div

@@ -1,5 +1,5 @@
-import { AddTodoForm } from "../features/add-todo/ui/AddTodoForm";
-import { TodoList } from "../widgets/todos/ui/TodoList";
+import { AddTodoForm } from "features";
+import { TodoList } from "widgets";
 
 export const App = () => {
   const isTouchDevice =

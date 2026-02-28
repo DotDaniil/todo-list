@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Todo, toggleTodo, deleteTodo, editTodo } from "../model/todoSlice";
-import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
+import React, { useState, useRef, useEffect, FC } from "react";
+import { useAppDispatch } from "shared";
+import { Todo, toggleTodo, deleteTodo, editTodo } from "../model";
 
-interface TodoItemProps {
+export type TodoItemProps = {
   todo: Todo;
   dragHandleProps?: any;
   onEditingChange?: (editing: boolean) => void;
   onDragEndCleanup?: (fn: () => void) => void;
-}
+};
 
-export const TodoItem: React.FC<TodoItemProps> = ({
+export const TodoItem: FC<TodoItemProps> = ({
   todo,
   dragHandleProps,
   onEditingChange,

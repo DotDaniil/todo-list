@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
-import { addTodo } from "../../../entities/todo/model/todoSlice";
+import { useState, FC, ChangeEvent } from "react";
+import { useAppDispatch } from "shared";
+import { addTodo } from "entities";
 
-export const AddTodoForm: React.FC = () => {
+export const AddTodoForm: FC = () => {
   const [title, setTitle] = useState("");
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: React.ChangeEvent) => {
+  const handleSubmit = (e: ChangeEvent) => {
     e.preventDefault();
     if (title.trim() === "") return;
     dispatch(addTodo({ title }));

@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
-import { SortableTodoItem } from "./SortableTodoItem";
-import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
-import { reorderTodos } from "../../../entities/todo/model/todoSlice";
+import { RootState } from "app";
+import { useAppDispatch } from "shared";
+import { reorderTodos } from "entities";
+import { SortableTodoItem } from "./sortable-todo-item";
 
 import {
   DndContext,
@@ -21,7 +21,7 @@ import {
 import {
   setFilter,
   Filter,
-} from "../../../features/filter-todos/model/filterSlice";
+} from "../../../features/filter-todos/model/filter-slice";
 
 export const TodoList: React.FC = () => {
   const todos = useSelector((state: RootState) => state.todos.todos);

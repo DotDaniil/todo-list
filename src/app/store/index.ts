@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todoReducer from "../../entities/todo/model/todoSlice";
-import filterReducer from "../../features/filter-todos/model/filterSlice";
+import { todoReducer } from "entities";
+import { filterReducer } from "features";
 
 export const store = configureStore({
   reducer: {
