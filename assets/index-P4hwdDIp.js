@@ -148,6 +148,14 @@ Error generating stack: `+a.message+`
   user-select: none;
   overflow-y: auto;
   overflow-x: hidden;
+
+  /* Chrome, Edge, Safari */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  /* Firefox */
+  scrollbar-width: none;
 `,a_=re.h1`
   color: #0487c4;
   margin-bottom: 24px;
@@ -155,7 +163,7 @@ Error generating stack: `+a.message+`
   position: absolute;
   top: 0;
   right: 0;
-  padding: 40px;
+  padding: 20px;
   font-size: 14px;
   color: #333;
 `,i_=()=>St.jsxs("div",{children:[Rn&&St.jsx(u_,{children:"Notice: To drag an element - tap it once."}),St.jsxs(l_,{children:[St.jsx(a_,{children:"Todo List"}),St.jsx(uE,{}),St.jsx(n_,{})]})]}),c_=bb({reducer:{todos:Yb,filter:rE}});p1.createRoot(document.getElementById("root")).render(St.jsx(Jt.StrictMode,{children:St.jsx(B1,{store:c_,children:St.jsx(i_,{})})}));
