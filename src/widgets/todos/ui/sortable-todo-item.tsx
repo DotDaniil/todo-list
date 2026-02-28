@@ -33,7 +33,7 @@ export const SortableTodoItem: React.FC<SortableTodoItemProps> = ({
   return (
     <SortableWrapper
       ref={setNodeRef}
-      isDragging={isDragging}
+      $isDragging={isDragging}
       transform={transformStyle}
       transition={transition}
       {...attributes}

@@ -52,7 +52,7 @@ export const TodoList: React.FC = () => {
         {filters.map((f) => (
           <FilterButton
             key={f}
-            active={f === filter}
+            $active={f === filter}
             onClick={() => dispatch(setFilter(f))}
           >
             {f}
@@ -61,13 +61,14 @@ export const TodoList: React.FC = () => {
       </FilterWrapper>
 
       <DndContext
+        autoScroll={{ threshold: { x: 0, y: 0.2 } }}
         sensors={sensors}
         collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
         onDragStart={() => {
           // NOTICE: Hides all drag and drop elements on mobile
           Object.values(cleanupRefs.current).forEach((cleanup) => cleanup?.());
         }}
+        onDragEnd={handleDragEnd}
       >
         <SortableContext
           items={todos.map((t) => t.id)}

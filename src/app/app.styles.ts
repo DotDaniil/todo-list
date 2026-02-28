@@ -11,6 +11,7 @@ export const AppWrapper = styled.div`
   -ms-user-select: none;
   user-select: none;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const Title = styled.h1`
