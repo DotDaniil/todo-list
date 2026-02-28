@@ -2,7 +2,7 @@
 
 Минимальное приложение Todo List, реализованное с использованием React/TypeScript.
 
-# GitHub Pages
+## GitHub Pages
 
 https://dotdaniil.github.io/todo-list/
 
