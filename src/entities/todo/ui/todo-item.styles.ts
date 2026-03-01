@@ -65,12 +65,11 @@ export const TodoName = styled.span<{
   text-decoration: ${({ $completed }) =>
     $completed ? "line-through" : "none"};
   color: ${({ $completed }) => ($completed ? "#45d656" : "#333")};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   display: block;
   flex: 1;
   min-width: 0;
+  white-space: normal;
+  word-break: break-word;
 `;
 
 export const Checkbox = styled.input`
