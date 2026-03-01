@@ -14,7 +14,7 @@ export const TouchNotice = styled.div`
   right: 0;
   font-size: 14px;
   color: #333;
-  align-content: center;
+
   opacity: 0;
   animation: ${noticeAnimation} 20s ease-in-out infinite;
 `;

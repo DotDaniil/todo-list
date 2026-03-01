@@ -24,7 +24,7 @@ export const AppWrapper = styled.div`
 
 export const Title = styled.h1`
   color: #0487c4;
-  margin-bottom: 0px;
+  margin: 0px;
 `;
 
 export const TitleWithNotice = styled.div<{ $flexDirection: string }>`

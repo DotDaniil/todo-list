@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { isTouchDevice } from "shared";
 import { TouchNotice } from "./rotation-notice.styles";
 
-const mobileMessage = "Tap item then hold 🖐🏻 to drag";
+const mobileMessage = "Notice: Tap item, hold & drag 🖐🏻";
 const desktopMessages = [
   "Done is better than perfect ✔️",
   "Stay focused 🧘",
@@ -26,7 +26,7 @@ export const RotatingNotice = () => {
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % messages.length);
-    }, 20000);
+    }, 15000);
 
     return () => clearInterval(id);
   }, [messages.length]);
