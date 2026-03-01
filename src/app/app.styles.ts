@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const AppWrapper = styled.div`
-  min-height: 100%;
+  min-height: calc(100% - 80px);
   padding: 40px;
   background-color: #ffffff;
   font-family: Arial, sans-serif;
@@ -28,10 +28,14 @@ export const Title = styled.h1`
 `;
 
 export const TouchNotice = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 20px;
+  position: relative;
+
   font-size: 14px;
   color: #333;
+`;
+
+export const TitleWithNotice = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;

@@ -51,7 +51,7 @@ export const TodoText = styled.span<{ $isTouch: boolean }>`
 
 export const Input = styled.input`
   width: 100%;
-  padding: 8px;
+  padding: 4px;
   font-size: 16px;
   border-radius: 6px;
   border: 1px solid #ccc;
