@@ -1,7 +1,7 @@
 {
   "name": "todo-fsd",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://dotdaniil.github.io/todo-list",
   "type": "module",
   "scripts": {
