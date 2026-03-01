@@ -88,6 +88,7 @@ export const TodoItem: FC<TodoItemProps> = ({
       $isTouch={isTouchDevice}
       $showHandle={showHandle}
       onClick={isTouchDevice ? handleTap : undefined}
+      // TODO: Add long touch handler for mobile devices
     >
       {!isEditing && isTouchDevice && showHandle && (
         <MobileHandle {...dragHandleProps}>
