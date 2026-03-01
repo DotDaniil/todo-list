@@ -24,18 +24,12 @@ export const AppWrapper = styled.div`
 
 export const Title = styled.h1`
   color: #0487c4;
-  margin-bottom: 24px;
+  margin-bottom: 0px;
 `;
 
-export const TouchNotice = styled.div`
-  position: relative;
-
-  font-size: 14px;
-  color: #333;
-`;
-
-export const TitleWithNotice = styled.div`
+export const TitleWithNotice = styled.div<{ $flexDirection: string }>`
   display: flex;
-  align-items: center;
+  position: relative;
+  flex-direction: ${(props) => props.$flexDirection};
   justify-content: space-between;
 `;

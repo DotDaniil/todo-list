@@ -17,6 +17,7 @@ export const AddTodoForm: FC = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Input
+        id="input"
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
