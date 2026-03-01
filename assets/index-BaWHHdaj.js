@@ -57,12 +57,11 @@ Error generating stack: `+a.message+`
 `,eE=ae.span`
   text-decoration: ${({$completed:l})=>l?"line-through":"none"};
   color: ${({$completed:l})=>l?"#45d656":"#333"};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   display: block;
   flex: 1;
   min-width: 0;
+  white-space: normal;
+  word-break: break-word;
 `,nE=ae.input`
   accent-color: #45d656;
   width: 20px;
