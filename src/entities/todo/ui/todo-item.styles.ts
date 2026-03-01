@@ -15,17 +15,17 @@ export const TodoContainer = styled.div<{
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   padding-left: ${({ $isTouch, $showHandle }) =>
     $isTouch ? ($showHandle ? 50 : 12) : 12}px;
-  transition: padding-left 0.25s;
   touch-action: ${({ $isTouch }) => ($isTouch ? "pan-y" : "auto")};
   cursor: ${({ $isTouch }) => ($isTouch ? "default" : "grab")};
 `;
 
 export const MobileHandle = styled.div`
+  background: rgba(255, 255, 255, 0.5);
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 40px;
+  width: 100%;
   cursor: grab;
   display: flex;
   align-items: center;
@@ -42,11 +42,17 @@ export const MobileHandle = styled.div`
   }
 `;
 
-export const TodoText = styled.span<{ $isTouch: boolean }>`
+export const TodoText = styled.span<{
+  $isTouch: boolean;
+  $showHandle: boolean;
+}>`
   flex: 1;
   min-width: 0;
   z-index: 2;
   cursor: ${({ $isTouch }) => ($isTouch ? "default" : "grab")};
+  // HACK: margin-left is used to position the text when is handled
+  margin-left: ${({ $showHandle, $isTouch }) =>
+    $showHandle && $isTouch ? -38 : 0}px;
 `;
 
 export const Input = styled.input`

@@ -4,7 +4,7 @@ import {
   isTouchDevice,
   useAppDispatch,
   BLUE_UI_COLOR,
-  GREEN_UI_COLOR,
+  PING_UI_COLOR,
 } from "shared";
 import { Pencil, Trash } from "./components";
 import { Todo, toggleTodo, deleteTodo, editTodo } from "../model";
@@ -95,7 +95,7 @@ export const TodoItem: FC<TodoItemProps> = ({
         </MobileHandle>
       )}
 
-      <TodoText $isTouch={isTouchDevice}>
+      <TodoText $isTouch={isTouchDevice} $showHandle={showHandle}>
         {isEditing ? (
           <Input
             value={title}
@@ -129,7 +129,7 @@ export const TodoItem: FC<TodoItemProps> = ({
       </Button>
 
       <Button
-        $bgColor={GREEN_UI_COLOR}
+        $bgColor={PING_UI_COLOR}
         onPointerDown={stopDrag}
         onClick={(e) => {
           if (isTouchDevice) e.stopPropagation();
