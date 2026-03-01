@@ -1,5 +1,5 @@
 import React from "react";
-import { CSS, Transform } from "@dnd-kit/utilities";
+import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { Todo, TodoItem } from "entities";
 import { SortableWrapper } from "./sortable-todo-item.styles";
