@@ -25,7 +25,8 @@ export const TodoList: React.FC = () => {
   const filter = useSelector((state: RootState) => state.filter.filter);
   const dispatch = useAppDispatch();
   const [editingId, setEditingId] = useState<string | null>(null);
-  const cleanupRefs = useRef<Record<string, (() => void) | null>>({});
+
+  const cleanupRefs = useRef<Record<string, () => void>>({});
 
   const filteredTodos = todos.filter((todo) => {
     if (filter === "all") return true;
@@ -44,6 +45,8 @@ export const TodoList: React.FC = () => {
     if (oldIndex !== newIndex) {
       dispatch(reorderTodos({ startIndex: oldIndex, endIndex: newIndex }));
     }
+
+    Object.values(cleanupRefs.current).forEach((fn) => fn?.());
   };
 
   return (
@@ -66,7 +69,7 @@ export const TodoList: React.FC = () => {
         collisionDetection={closestCenter}
         onDragStart={() => {
           // NOTICE: Hides all drag and drop elements on mobile
-          Object.values(cleanupRefs.current).forEach((cleanup) => cleanup?.());
+          Object.values(cleanupRefs.current).forEach((fn) => fn?.());
         }}
         onDragEnd={handleDragEnd}
       >

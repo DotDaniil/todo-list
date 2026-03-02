@@ -11,42 +11,37 @@ export type SortableTodoItemProps = {
   onDragEndCleanup?: (cleanupFn: () => void) => void;
 };
 
-export const SortableTodoItem: React.FC<SortableTodoItemProps> = ({
-  todo,
-  isEditing,
-  onEditingChange,
-  onDragEndCleanup,
-}) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: todo.id,
-  });
+export const SortableTodoItem: React.FC<SortableTodoItemProps> = React.memo(
+  ({ todo, isEditing, onEditingChange, onDragEndCleanup }) => {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      isDragging,
+    } = useSortable({ id: todo.id });
 
-  const modifiedTransform =
-    transform && isDragging ? { ...transform, scaleY: 1 } : transform;
+    const modifiedTransform =
+      transform && isDragging ? { ...transform, scaleY: 1 } : transform;
 
-  const transformStyle = CSS.Transform.toString(modifiedTransform);
+    const transformStyle = CSS.Transform.toString(modifiedTransform);
 
-  return (
-    <SortableWrapper
-      ref={setNodeRef}
-      $isDragging={isDragging}
-      transform={transformStyle}
-      transition={transition}
-      {...attributes}
-    >
-      <TodoItem
-        todo={todo}
-        dragHandleProps={isEditing ? undefined : listeners}
-        onEditingChange={onEditingChange}
-        onDragEndCleanup={onDragEndCleanup}
-      />
-    </SortableWrapper>
-  );
-};
+    return (
+      <SortableWrapper
+        ref={setNodeRef}
+        $isDragging={isDragging}
+        transform={transformStyle}
+        transition={transition}
+        {...attributes}
+      >
+        <TodoItem
+          todo={todo}
+          dragHandleProps={isEditing ? undefined : listeners}
+          onEditingChange={onEditingChange}
+          onDragEndCleanup={onDragEndCleanup}
+        />
+      </SortableWrapper>
+    );
+  },
+);
