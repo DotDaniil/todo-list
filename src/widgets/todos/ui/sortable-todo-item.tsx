@@ -31,8 +31,8 @@ export const SortableTodoItem: React.FC<SortableTodoItemProps> = React.memo(
       <SortableWrapper
         ref={setNodeRef}
         $isDragging={isDragging}
-        transform={transformStyle}
-        transition={transition}
+        $transition={transition}
+        $transform={transformStyle}
         {...attributes}
       >
         <TodoItem
