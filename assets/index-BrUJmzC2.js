@@ -119,7 +119,6 @@ Error generating stack: `+a.message+`
   border: none;
   background-color: #0487c4;
   color: #fff;
-  font-weight: bold;
   cursor: pointer;
 
   &:hover {
