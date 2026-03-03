@@ -143,7 +143,6 @@ Error generating stack: `+a.message+`
   cursor: pointer;
   background-color: ${l=>l.$active?"#0487c4":"#ffffff"};
   color: ${l=>l.$active?"#fff":"#0487c4"};
-  font-weight: ${l=>l.$active?"bold":"normal"};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition:
     background-color 0.2s,
